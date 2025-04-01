@@ -25,6 +25,11 @@ public class PeliculesController {
 
     private int numId = 1;
 
+    @GetMapping("/afegirPeliculaForm")
+    public String mostrarFormulariAfegirPelicula() {
+        return "pelicules/afegirPeliculaForm";
+    }
+
     @PostMapping("/afegirPelicula")
     public String afegirPelicula(
             @SessionAttribute("llistaPelicules") ArrayList<Pelicula> pelicules,

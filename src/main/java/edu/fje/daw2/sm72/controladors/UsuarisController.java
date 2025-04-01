@@ -25,6 +25,11 @@ public class UsuarisController {
         return usuaris;
     }
 
+    @GetMapping("/afegirUsuariForm")
+    public String mostrarFormulariAfegirUsuari() {
+        return "usuaris/afegirUsuariForm";
+    }
+
     @PostMapping("/afegirUsuari")
     public String afegirUsuari(
             @RequestParam String nom,
@@ -33,20 +38,21 @@ public class UsuarisController {
             Model model) {
         Usuari usuari = new Usuari(nom, cognom, email);
         repositori.save(usuari);
+        model.addAttribute("alumneAfegit", usuari); // Changed to match template expectation
         model.addAttribute("llistaUsuaris", repositori.findAll());
         return "usuaris/afegirUsuari";
     }
 
     @GetMapping("/consultarUsuaris")
     public String consultarUsuaris(Model model) {
-        model.addAttribute("llistaUsuaris", repositori.findAll());
+        model.addAttribute("llistaAlumnes", repositori.findAll()); // Changed to match template expectation
         return "usuaris/consultarUsuaris";
     }
 
     @PostMapping("/esborrarUsuari")
     public String esborrarUsuari(@RequestParam String id, Model model) {
         repositori.deleteById(id);
-        model.addAttribute("llistaUsuaris", repositori.findAll());
+        model.addAttribute("llistaAlumnes", repositori.findAll()); // Changed to match template
         return "usuaris/consultarUsuaris";
     }
 
@@ -65,7 +71,7 @@ public class UsuarisController {
             usuari.setEmail(email);
             repositori.save(usuari);
         }
-        model.addAttribute("llistaUsuaris", repositori.findAll());
+        model.addAttribute("llistaAlumnes", repositori.findAll()); // Changed to match template
         return "usuaris/consultarUsuaris";
     }
 }

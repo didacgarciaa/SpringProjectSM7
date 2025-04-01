@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Alumnes CLOT</title>
+</head>
+<body>
+<h1>Afegir Usuari</h1>
+<form method="post" action="/afegirUsuari">
+    <input type="text" name="nom" placeholder="entra un nom" required>
+    <input type="text" name="cognom" placeholder="entra un cognom" required>
+    <input type="text" name="email" placeholder="entra un correu" required>
+
+    <input type="submit" value="enviar alumne">
+</form>
+<br>
+<a href="/consultarUsuaris">Veure llista d'usuaris</a>
+</body>
+</html>

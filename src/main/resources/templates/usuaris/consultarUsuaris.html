@@ -6,12 +6,41 @@
 </head>
 <body>
 <h1>Llista d'alumnes</h1>
-<ul>
-    <li th:each="alumne : ${llistaAlumnes}">
-        <span th:text="${alumne.id}"></span> -
-        <span th:text="${alumne.nom}"></span> -
-        <span th:text="${alumne.getNota()}"></span>
-    </li>
-</ul>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Cognom</th>
+        <th>Email</th>
+        <th>Accions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="alumne : ${llistaAlumnes}">
+        <td th:text="${alumne.id}">ID</td>
+        <td th:text="${alumne.nom}">Nom</td>
+        <td th:text="${alumne.cognom}">Cognom</td>
+        <td th:text="${alumne.email}">Email</td>
+        <td>
+            <!-- Formulario para borrar -->
+            <form th:action="@{/esborrarUsuari}" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${alumne.id}" />
+                <button type="submit">Esborrar</button>
+            </form>
+            <!-- Formulario para modificar inline -->
+            <form th:action="@{/modificarUsuari}" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${alumne.id}" />
+                <input type="text" name="nom" th:value="${alumne.nom}" required/>
+                <input type="text" name="cognom" th:value="${alumne.cognom}" required/>
+                <input type="text" name="email" th:value="${alumne.email}" required/>
+                <button type="submit">Modificar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<a href="/afegirAlumne.html">Afegir nou usuari</a>
 </body>
 </html>
