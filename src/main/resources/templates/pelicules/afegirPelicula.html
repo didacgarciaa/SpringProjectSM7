@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Película Agregada</title>
+</head>
+<body>
+<h1>Película Agregada</h1>
+<p>La película se ha agregado correctamente:</p>
+<ul>
+    <li>ID: <span th:text="${peliculaAfegida.id}"></span></li>
+    <li>Título: <span th:text="${peliculaAfegida.titulo}"></span></li>
+    <li>Puntuación: <span th:text="${peliculaAfegida.puntuacion}"></span></li>
+</ul>
+<br>
+<a th:href="@{/consultarPelicules}">Consultar todas las películas</a>
+<br>
+<a th:href="@{/afegirPeliculaForm}">Agregar otra película</a>
+</body>
+</html>

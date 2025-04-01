@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Alumnes CLOT - Llista</title>
+</head>
+<body>
+<h1>Llista d'alumnes</h1>
+<ul>
+    <li th:each="alumne : ${llistaAlumnes}">
+        <span th:text="${alumne.id}"></span> -
+        <span th:text="${alumne.nom}"></span> -
+        <span th:text="${alumne.getNota()}"></span>
+    </li>
+</ul>
+</body>
+</html>

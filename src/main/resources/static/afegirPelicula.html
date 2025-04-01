@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir Película</title>
+</head>
+<body>
+<h1>Añadir Película</h1>
+<form th:action="@{/afegirPelicula}" method="post">
+    <div>
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required/>
+    </div>
+    <div>
+        <label for="puntuacion">Puntuación:</label>
+        <input type="number" id="puntuacion" name="puntuacion" step="0.1" required/>
+    </div>
+    <div>
+        <button type="submit">Agregar</button>
+    </div>
+</form>
+<br>
+<a th:href="@{/consultarPelicules}">Ver listado de películas</a>
+</body>
+</html>
