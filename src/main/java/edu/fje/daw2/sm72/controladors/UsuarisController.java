@@ -26,7 +26,8 @@ public class UsuarisController {
     }
 
     @GetMapping("/afegirUsuariForm")
-    public String mostrarFormulariAfegirUsuari() {
+    public String mostrarFormulariAfegirUsuari(Model model) {
+        model.addAttribute("activeTab", "usuaris");
         return "usuaris/afegirUsuariForm";
     }
 
@@ -45,34 +46,41 @@ public class UsuarisController {
         repositori.save(usuari);
         model.addAttribute("alumneAfegit", usuari);
         model.addAttribute("llistaUsuaris", repositori.findAll());
+        model.addAttribute("success", "Usuari afegit correctament");
+        model.addAttribute("activeTab", "usuaris");
         return "redirect:/consultarUsuaris";
     }
 
     @GetMapping("/consultarUsuaris")
     public String consultarUsuaris(Model model) {
         model.addAttribute("llistaUsuaris", repositori.findAll());
+        model.addAttribute("activeTab", "usuaris");
         return "usuaris/consultarUsuaris";
     }
 
     @GetMapping("/esborrarUsuari")
-    public String mostrarFormulariEsborrarUsuari() {
-        return "redirect:/esborrarUsuari.html";
+    public String mostrarFormulariEsborrarUsuari(Model model) {
+        model.addAttribute("activeTab", "usuaris");
+        return "usuaris/esborrarUsuariForm";
     }
 
     @PostMapping("/esborrarUsuari")
     public String esborrarUsuari(@RequestParam Long id, Model model) {
         try {
             repositori.deleteById(id);
+            model.addAttribute("success", "Usuari eliminat correctament amb ID: " + id);
         } catch (Exception e) {
             model.addAttribute("error", "No s'ha pogut esborrar l'usuari amb ID: " + id);
         }
         model.addAttribute("llistaUsuaris", repositori.findAll());
+        model.addAttribute("activeTab", "usuaris");
         return "usuaris/consultarUsuaris";
     }
 
     @GetMapping("/modificarUsuari")
-    public String mostrarFormulariModificarUsuari() {
-        return "redirect:/modificarUsuari.html";
+    public String mostrarFormulariModificarUsuari(Model model) {
+        model.addAttribute("activeTab", "usuaris");
+        return "usuaris/modificarUsuariForm";
     }
 
     @PostMapping("/modificarUsuari")
@@ -82,17 +90,23 @@ public class UsuarisController {
             @RequestParam String cognom,
             @RequestParam String email,
             Model model) {
-        Optional<Usuari> optUsuari = repositori.findById(id);
-        if (optUsuari.isPresent()) {
-            Usuari usuari = optUsuari.get();
-            usuari.setNom(nom);
-            usuari.setCognom(cognom);
-            usuari.setEmail(email);
-            repositori.save(usuari);
-        } else {
-            model.addAttribute("error", "No s'ha trobat l'usuari amb ID: " + id);
+        try {
+            Optional<Usuari> optUsuari = repositori.findById(id);
+            if (optUsuari.isPresent()) {
+                Usuari usuari = optUsuari.get();
+                usuari.setNom(nom);
+                usuari.setCognom(cognom);
+                usuari.setEmail(email);
+                repositori.save(usuari);
+                model.addAttribute("success", "Usuari modificat correctament");
+            } else {
+                model.addAttribute("error", "No s'ha trobat l'usuari amb ID: " + id);
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al modificar l'usuari: " + e.getMessage());
         }
         model.addAttribute("llistaUsuaris", repositori.findAll());
+        model.addAttribute("activeTab", "usuaris");
         return "usuaris/consultarUsuaris";
     }
 }

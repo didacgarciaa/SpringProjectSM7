@@ -1,46 +1,147 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Consultar Usuaris')">
     <meta charset="UTF-8">
-    <title>Alumnes CLOT - Llista</title>
+    <title>Consultar Usuaris</title>
 </head>
 <body>
-<h1>Llista d'alumnes</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nom</th>
-        <th>Cognom</th>
-        <th>Email</th>
-        <th>Accions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="alumne : ${llistaUsuaris}">
-        <td th:text="${alumne.id}">ID</td>
-        <td th:text="${alumne.nom}">Nom</td>
-        <td th:text="${alumne.cognom}">Cognom</td>
-        <td th:text="${alumne.email}">Email</td>
-        <td>
-            <!-- Formulario para borrar -->
-            <form action="/esborrarUsuari" method="post" style="display:inline;">
-                <input type="hidden" name="id" th:value="${alumne.id}" />
-                <button type="submit">Esborrar</button>
-            </form>
-            <!-- Formulario para modificar inline -->
-            <form action="/modificarUsuari" method="post" style="display:inline;">
-                <input type="hidden" name="id" th:value="${alumne.id}" />
-                <input type="text" name="nom" th:value="${alumne.nom}" required/>
-                <input type="text" name="cognom" th:value="${alumne.cognom}" required/>
-                <input type="text" name="email" th:value="${alumne.email}" required/>
-                <button type="submit">Modificar</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br>
-<a href="/afegirUsuari.html">Afegir nou usuari</a>
+    <!-- Navigation -->
+    <nav th:replace="fragments/layout :: navbar"></nav>
+
+    <!-- Alerts -->
+    <div th:replace="fragments/layout :: alerts"></div>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-users me-2"></i>Llista d'Usuaris</h1>
+            <a href="/afegirUsuariForm" class="btn btn-primary">
+                <i class="fas fa-user-plus me-2"></i>Afegir nou usuari
+            </a>
+        </div>
+        
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Cognom</th>
+                        <th>Email</th>
+                        <th>Accions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${llistaUsuaris.empty}">
+                        <td colspan="5" class="empty-state">
+                            <i class="fas fa-info-circle me-2"></i>No hi ha usuaris disponibles
+                        </td>
+                    </tr>
+                    <tr th:each="alumne : ${llistaUsuaris}">
+                        <td th:text="${alumne.id}">ID</td>
+                        <td th:text="${alumne.nom}">Nom</td>
+                        <td th:text="${alumne.cognom}">Cognom</td>
+                        <td th:text="${alumne.email}">Email</td>
+                        <td class="actions">
+                            <button type="button" class="btn btn-sm btn-primary edit-user-btn" data-bs-toggle="modal" 
+                                    th:data-id="${alumne.id}" th:data-nom="${alumne.nom}" 
+                                    th:data-cognom="${alumne.cognom}" th:data-email="${alumne.email}"
+                                    data-bs-target="#editUserModal">
+                                <i class="fas fa-edit me-1"></i>Editar
+                            </button>
+                            
+                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    th:data-id="${alumne.id}" 
+                                    data-bs-target="#deleteUserModal">
+                                <i class="fas fa-trash-alt me-1"></i>Esborrar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Modificar Usuari</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm" action="/modificarUsuari" method="post">
+                        <input type="hidden" id="editUserId" name="id" />
+                        <div class="form-group">
+                            <label for="editUserNom">Nom</label>
+                            <input type="text" class="form-control" id="editUserNom" name="nom" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserCognom">Cognom</label>
+                            <input type="text" class="form-control" id="editUserCognom" name="cognom" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserEmail">Email</label>
+                            <input type="email" class="form-control" id="editUserEmail" name="email" required />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel·lar</button>
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('editUserForm').submit();">Guardar canvis</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete User Modal -->
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteUserModalLabel">Confirmar eliminació</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Estàs segur que vols eliminar aquest usuari?</p>
+                    <p class="text-danger">Aquesta acció no es pot desfer.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel·lar</button>
+                    <form id="deleteUserForm" action="/esborrarUsuari" method="post">
+                        <input type="hidden" id="deleteUserId" name="id" />
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer th:replace="fragments/layout :: footer"></footer>
+    
+    <!-- Script to handle modal data -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Edit user modal
+            const editButtons = document.querySelectorAll('.edit-user-btn');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('editUserId').value = this.getAttribute('data-id');
+                    document.getElementById('editUserNom').value = this.getAttribute('data-nom');
+                    document.getElementById('editUserCognom').value = this.getAttribute('data-cognom');
+                    document.getElementById('editUserEmail').value = this.getAttribute('data-email');
+                });
+            });
+            
+            // Delete user modal
+            const deleteButtons = document.querySelectorAll('[data-bs-target="#deleteUserModal"]');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('deleteUserId').value = this.getAttribute('data-id');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

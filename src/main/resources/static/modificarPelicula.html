@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Modificar Película</title>
 </head>
 <body>
 <h1>Modificar Película</h1>
-<form action="/modificarPelicula" method="post">
+<form action="/modificarPelicula" method="post" enctype="multipart/form-data">
     <div>
         <label for="id">ID de la película:</label>
         <input type="number" id="id" name="id" required>
+    </div>
+    <div>
+        <label for="numId">Número ID:</label>
+        <input type="number" id="numId" name="numId" required>
     </div>
     <div>
         <label for="titulo">Nuevo Título:</label>
@@ -20,10 +24,18 @@
         <input type="number" id="puntuacion" name="puntuacion" step="0.1" required>
     </div>
     <div>
+        <label for="image">Nueva Imagen (opcional):</label>
+        <input type="file" id="image" name="image" accept="image/*">
+    </div>
+    <div>
+        <input type="checkbox" id="keepExistingImage" name="keepExistingImage" value="true" checked>
+        <label for="keepExistingImage">Mantener la imagen existente si no se selecciona una nueva</label>
+    </div>
+    <div>
         <button type="submit">Modificar</button>
     </div>
 </form>
 <br>
 <a href="/consultarPelicules">Volver al listado</a>
 </body>
-</html>
+</html> 

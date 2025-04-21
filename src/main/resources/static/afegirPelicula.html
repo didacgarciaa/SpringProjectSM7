@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Añadir Película</title>
 </head>
 <body>
 <h1>Añadir Película</h1>
-<form action="/afegirPelicula" method="post">
+<form action="/afegirPelicula" method="post" enctype="multipart/form-data">
     <div>
         <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" required/>
+        <input type="text" id="titulo" name="titulo" placeholder="Introduzca el título" required>
     </div>
     <div>
         <label for="puntuacion">Puntuación:</label>
-        <input type="number" id="puntuacion" name="puntuacion" step="0.1" required/>
+        <input type="number" id="puntuacion" name="puntuacion" step="0.1" min="0" max="10" required>
+        <span>(Valor entre 0 y 10)</span>
     </div>
     <div>
-        <button type="submit">Agregar</button>
+        <label for="image">Imagen de la película (opcional):</label>
+        <input type="file" id="image" name="image" accept="image/*">
+    </div>
+    <div>
+        <button type="submit">Añadir</button>
     </div>
 </form>
 <br>
-<a th:href="@{/consultarPelicules}">Ver listado de películas</a>
+<a href="/consultarPelicules">Ver listado de películas</a>
 </body>
-</html>
+</html> 

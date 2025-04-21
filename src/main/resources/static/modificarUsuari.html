@@ -1,16 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <title>Alumnes CLOT</title>
+    <title>Modificar Usuari</title>
 </head>
 <body>
+<h1>Modificar Usuari</h1>
 <form method="post" action="/modificarUsuari">
-    <input type="number" name="id" placeholder="entra el id de l'alumne">
-    <input type="text" name="nom" placeholder="entra un nom">
-    <input type="text" name="cognom" placeholder="entra un cognom">
-    <input type="text" name="email" placeholder="entra un correu">
-    <input type="submit" value="enviar alumne">
+    <div>
+        <label for="id">ID de l'usuari:</label>
+        <input type="number" id="id" name="id" placeholder="Introdueix l'ID de l'usuari" required>
+    </div>
+    <div>
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" placeholder="Introdueix el nom" required>
+    </div>
+    <div>
+        <label for="cognom">Cognom:</label>
+        <input type="text" id="cognom" name="cognom" placeholder="Introdueix el cognom" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Introdueix l'email" required>
+    </div>
+    <div>
+        <input type="submit" value="Modificar usuari">
+    </div>
 </form>
+<br>
+<a href="/consultarUsuaris">Tornar a la llista d'usuaris</a>
 </body>
-</html>
+</html> 

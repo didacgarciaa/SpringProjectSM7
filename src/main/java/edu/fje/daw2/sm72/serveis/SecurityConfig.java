@@ -16,14 +16,13 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**", "/afegirUsuariForm", "/afegirUsuari", "/consultarUsuaris",
-                                         "/esborrarUsuari", "/modificarUsuari",
-                                         "/afegirPeliculaForm", "/afegirPelicula", "/consultarPelicules",
-                                         "/esborrarPelicula", "/modificarPelicula",
-                                         "/css/**", "/js/**", "/images/**", "/*.html").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/*.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(Customizer.withDefaults());
+
         return http.build();
     }
 }
+
+

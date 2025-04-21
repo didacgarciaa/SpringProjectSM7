@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Error')">
     <meta charset="UTF-8">
-    <title>Alumnes</title>
+    <title>Error</title>
 </head>
 <body>
-401 NOT FOUND
+    <!-- Navigation -->
+    <nav th:replace="fragments/layout :: navbar"></nav>
+
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">
+                <h3><i class="fas fa-exclamation-triangle me-2"></i>Error</h3>
+            </div>
+            <div class="card-body text-center p-5">
+                <h1 class="display-1 text-danger mb-4" th:text="${status} ?: 'Error'">500</h1>
+                <h2 class="mb-4" th:text="${error} ?: 'Algo ha ido mal'">Internal Server Error</h2>
+                <p class="lead mb-5" th:text="${message} ?: 'Se ha producido un error inesperado'">
+                    Lo sentimos, se ha producido un error inesperado.
+                </p>
+                <p th:if="${timestamp}" class="text-muted">
+                    <small>Tiempo: <span th:text="${timestamp}">Timestamp</span></small>
+                </p>
+                <p th:if="${path}" class="text-muted">
+                    <small>Ruta: <span th:text="${path}">Path</span></small>
+                </p>
+                <div class="mt-4">
+                    <a href="/" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i>Volver a la página principal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer th:replace="fragments/layout :: footer"></footer>
 </body>
 </html>

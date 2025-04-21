@@ -1,20 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/layout :: head('Película Añadida')">
     <meta charset="UTF-8">
-    <title>Película Agregada</title>
+    <title>Película Añadida</title>
 </head>
 <body>
-<h1>Película Agregada</h1>
-<p>La película se ha agregado correctamente:</p>
-<ul>
-    <li>ID: <span th:text="${peliculaAfegida.id}"></span></li>
-    <li>Título: <span th:text="${peliculaAfegida.titulo}"></span></li>
-    <li>Puntuación: <span th:text="${peliculaAfegida.puntuacion}"></span></li>
-</ul>
-<br>
-<a th:href="@{/consultarPelicules}">Consultar todas las películas</a>
-<br>
-<a th:href="@{/afegirPeliculaForm}">Agregar otra película</a>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+    
+    <div class="container mt-4">
+        <div th:replace="fragments/layout :: alerts"></div>
+        
+        <h1 class="text-center mb-4">Película Añadida</h1>
+        
+        <div class="form-container">
+            <div th:if="${peliculaAfegida != null}" class="alert alert-success">
+                <i class="fas fa-check-circle me-2"></i> 
+                Película añadida correctamente: <strong th:text="${peliculaAfegida.titulo}"></strong>
+                <p>Puntuación: <span th:text="${peliculaAfegida.puntuacion}"></span></p>
+            </div>
+            
+            <div th:if="${peliculaAfegida != null && peliculaAfegida.hasImage()}" class="text-center my-4">
+                <h5>Imagen:</h5>
+                <img th:src="@{'/image/pelicula/' + ${peliculaAfegida.id}}" 
+                     alt="Imagen de película" class="img-thumbnail" style="max-width: 300px;">
+            </div>
+            
+            <div class="mt-4 text-center">
+                <a href="/afegirPeliculaForm" class="btn btn-primary me-2">
+                    <i class="fas fa-plus me-1"></i> Añadir otra película
+                </a>
+                <a href="/consultarPelicules" class="btn btn-secondary">
+                    <i class="fas fa-list me-1"></i> Ver listado de películas
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
 </body>
-</html>
+</html> 

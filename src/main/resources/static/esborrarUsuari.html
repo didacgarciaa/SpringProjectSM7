@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <title>Alumnes CLOT</title>
+    <title>Esborrar Usuari</title>
 </head>
 <body>
 <h1>Esborrar Usuari</h1>
 <form method="post" action="/esborrarUsuari">
-    <input type="number" name="id" placeholder="entra un id" required>
-    <input type="submit" value="Esborrar usuari">
+    <div>
+        <label for="id">ID de l'usuari a esborrar:</label>
+        <input type="number" id="id" name="id" placeholder="Introdueix l'ID de l'usuari" required>
+    </div>
+    <div>
+        <input type="submit" value="Esborrar usuari">
+    </div>
 </form>
 <br>
-<a href="/consultarUsuaris">Veure llista d'usuaris</a>
+<a href="/consultarUsuaris">Tornar a la llista d'usuaris</a>
 </body>
-</html>
+</html> 

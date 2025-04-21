@@ -1,43 +1,159 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/layout :: head('Listado de Películas')">
     <meta charset="UTF-8">
     <title>Listado de Películas</title>
 </head>
 <body>
-<h1>Listado de Películas</h1>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Puntuación</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="pelicula : ${llistaPelicules}">
-        <td th:text="${pelicula.id}">ID</td>
-        <td th:text="${pelicula.titulo}">Título</td>
-        <td th:text="${pelicula.puntuacion}">Puntuación</td>
-        <td>
-            <!-- Formulario para borrar -->
-            <form action="/esborrarPelicula" method="post" style="display:inline;">
-                <input type="hidden" name="id" th:value="${pelicula.id}" />
-                <button type="submit">Borrar</button>
-            </form>
-            <!-- Formulario para modificar -->
-            <form action="/modificarPelicula" method="post" style="display:inline;">
-                <input type="hidden" name="id" th:value="${pelicula.id}" />
-                <input type="text" name="titulo" placeholder="Nuevo Título" required/>
-                <input type="number" name="puntuacion" step="0.1" placeholder="Nueva Puntuación" required/>
-                <button type="submit">Modificar</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br>
-<a th:href="@{/afegirPeliculaForm}">Agregar nueva película</a>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+    
+    <div class="container mt-4">
+        <div th:replace="fragments/layout :: alerts"></div>
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Listado de Películas</h1>
+            <a th:href="@{/afegirPeliculaForm}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i> Añadir Película
+            </a>
+        </div>
+        
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Título</th>
+                        <th>Puntuación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(llistaPelicules)}">
+                        <td colspan="5" class="empty-state">
+                            <i class="fas fa-film me-2"></i> No hay películas registradas
+                        </td>
+                    </tr>
+                    <tr th:each="pelicula : ${llistaPelicules}">
+                        <td th:text="${pelicula.id}">ID</td>
+                        <td>
+                            <img th:if="${pelicula.hasImage()}" th:src="@{'/image/pelicula/' + ${pelicula.id}}" 
+                                 alt="Imagen de película" class="img-thumbnail" style="max-width: 100px;">
+                            <span th:unless="${pelicula.hasImage()}" class="text-muted">
+                                <i class="fas fa-image"></i> Sin imagen
+                            </span>
+                        </td>
+                        <td th:text="${pelicula.titulo}">Título</td>
+                        <td>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar" role="progressbar" 
+                                     th:style="'width: ' + ${pelicula.puntuacion * 10} + '%'" 
+                                     th:aria-valuenow="${pelicula.puntuacion}"
+                                     th:text="${pelicula.puntuacion}">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="actions">
+                            <button type="button" class="btn btn-sm btn-warning" 
+                                    data-bs-toggle="modal" 
+                                    th:data-bs-target="'#editModal' + ${pelicula.id}">
+                                <i class="fas fa-edit me-1"></i> Editar
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger" 
+                                    data-bs-toggle="modal" 
+                                    th:data-bs-target="'#deleteModal' + ${pelicula.id}">
+                                <i class="fas fa-trash me-1"></i> Borrar
+                            </button>
+                            
+                            <!-- Edit Modal -->
+                            <div class="modal fade" th:id="'editModal' + ${pelicula.id}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Editar Película</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="/modificarPelicula" method="post" enctype="multipart/form-data">
+                                            <div class="modal-body">
+                                                <input type="hidden" name="id" th:value="${pelicula.id}" />
+                                                <input type="hidden" name="numId" th:value="${pelicula.numId}" />
+                                                
+                                                <div class="form-group">
+                                                    <label for="titulo">Título</label>
+                                                    <input type="text" class="form-control" id="titulo" name="titulo" 
+                                                           th:value="${pelicula.titulo}" required>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label for="puntuacion">Puntuación</label>
+                                                    <input type="number" class="form-control" id="puntuacion" name="puntuacion"
+                                                           th:value="${pelicula.puntuacion}" step="0.1" min="0" max="10" required>
+                                                    <span class="form-hint">Valor entre 0 y 10</span>
+                                                </div>
+                                                
+                                                <div class="form-group mt-3">
+                                                    <label>Imagen actual:</label>
+                                                    <div class="mb-2">
+                                                        <img th:if="${pelicula.hasImage()}" th:src="@{'/image/pelicula/' + ${pelicula.id}}" 
+                                                             alt="Imagen de película" class="img-thumbnail" style="max-width: 150px;">
+                                                        <span th:unless="${pelicula.hasImage()}" class="text-muted">
+                                                            <i class="fas fa-image"></i> No hay imagen
+                                                        </span>
+                                                    </div>
+                                                    <label for="image">Cambiar imagen:</label>
+                                                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                                    <div class="form-check mt-2">
+                                                        <input type="checkbox" class="form-check-input" id="keepExistingImage" 
+                                                               name="keepExistingImage" value="true" checked>
+                                                        <label class="form-check-label" for="keepExistingImage">
+                                                            Mantener la imagen existente si no se selecciona una nueva
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Delete Modal -->
+                            <div class="modal fade" th:id="'deleteModal' + ${pelicula.id}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Confirmar eliminación</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>¿Estás seguro de que deseas eliminar la película 
+                                               <strong th:text="${pelicula.titulo}"></strong>?</p>
+                                            <p class="text-danger">Esta acción no se puede deshacer.</p>
+                                            <div th:if="${pelicula.hasImage()}" class="text-center mb-3">
+                                                <img th:src="@{'/image/pelicula/' + ${pelicula.id}}" 
+                                                     alt="Imagen de película" class="img-thumbnail" style="max-width: 150px;">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <form action="/esborrarPelicula" method="post" style="display:inline;">
+                                                <input type="hidden" name="id" th:value="${pelicula.id}" />
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
 </body>
 </html>
