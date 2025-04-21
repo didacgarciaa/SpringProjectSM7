@@ -22,12 +22,12 @@
         <td th:text="${pelicula.puntuacion}">Puntuación</td>
         <td>
             <!-- Formulario para borrar -->
-            <form th:action="@{/esborrarPelicula}" method="post" style="display:inline;">
+            <form action="/esborrarPelicula" method="post" style="display:inline;">
                 <input type="hidden" name="id" th:value="${pelicula.id}" />
                 <button type="submit">Borrar</button>
             </form>
             <!-- Formulario para modificar -->
-            <form th:action="@{/modificarPelicula}" method="post" style="display:inline;">
+            <form action="/modificarPelicula" method="post" style="display:inline;">
                 <input type="hidden" name="id" th:value="${pelicula.id}" />
                 <input type="text" name="titulo" placeholder="Nuevo Título" required/>
                 <input type="number" name="puntuacion" step="0.1" placeholder="Nueva Puntuación" required/>

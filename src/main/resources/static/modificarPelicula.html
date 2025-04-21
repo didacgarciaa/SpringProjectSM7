@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Modificar Película</h1>
-<form th:action="@{/modificarPelicula}" method="post">
+<form action="/modificarPelicula" method="post">
     <div>
         <label for="id">ID de la película:</label>
         <input type="number" id="id" name="id" required>
@@ -24,6 +24,6 @@
     </div>
 </form>
 <br>
-<a th:href="@{/consultarPelicules}">Volver al listado</a>
+<a href="/consultarPelicules">Volver al listado</a>
 </body>
 </html>

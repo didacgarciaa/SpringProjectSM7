@@ -1,28 +1,44 @@
 package edu.fje.daw2.sm72.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Objects;
 
+@Document(collection = "peliculas")
 public class Pelicula {
-    private int id;
+    @Id
+    private String id;
+    private int numId;
     private String titulo;
     private double puntuacion;
 
-    public Pelicula(int id) {
-        this.id = id;
+    public Pelicula() {
     }
 
-    public Pelicula(int id, String titulo, double puntuacion) {
-        this.id = id;
+    public Pelicula(int numId) {
+        this.numId = numId;
+    }
+
+    public Pelicula(int numId, String titulo, double puntuacion) {
+        this.numId = numId;
         this.titulo = titulo;
         this.puntuacion = puntuacion;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public int getNumId() {
+        return numId;
+    }
+
+    public void setNumId(int numId) {
+        this.numId = numId;
     }
 
     public String getTitulo() {
@@ -46,18 +62,19 @@ public class Pelicula {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Pelicula pelicula = (Pelicula) o;
-        return id == pelicula.id;
+        return numId == pelicula.numId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(numId);
     }
 
     @Override
     public String toString() {
         return "Pelicula{" +
                 "id=" + id +
+                ", numId=" + numId +
                 ", titulo='" + titulo + '\'' +
                 ", puntuacion=" + puntuacion +
                 '}';

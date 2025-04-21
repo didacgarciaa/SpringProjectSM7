@@ -1,6 +1,9 @@
 package edu.fje.daw2.sm72.model;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 /**
  * Classe entitat que representa un usuari.
@@ -8,12 +11,14 @@ import org.springframework.data.annotation.Id;
  * @author
  * @version 1.0
  */
+@Entity
 public class Usuari {
     @Id
-    public String id;
-    public String nom;
-    public String cognom;
-    public String email;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nom;
+    private String cognom;
+    private String email;
 
     public Usuari() {}
 
@@ -23,11 +28,11 @@ public class Usuari {
         this.email = email;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

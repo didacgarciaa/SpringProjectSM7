@@ -17,19 +17,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="alumne : ${llistaAlumnes}">
+    <tr th:each="alumne : ${llistaUsuaris}">
         <td th:text="${alumne.id}">ID</td>
         <td th:text="${alumne.nom}">Nom</td>
         <td th:text="${alumne.cognom}">Cognom</td>
         <td th:text="${alumne.email}">Email</td>
         <td>
             <!-- Formulario para borrar -->
-            <form th:action="@{/esborrarUsuari}" method="post" style="display:inline;">
+            <form action="/esborrarUsuari" method="post" style="display:inline;">
                 <input type="hidden" name="id" th:value="${alumne.id}" />
                 <button type="submit">Esborrar</button>
             </form>
             <!-- Formulario para modificar inline -->
-            <form th:action="@{/modificarUsuari}" method="post" style="display:inline;">
+            <form action="/modificarUsuari" method="post" style="display:inline;">
                 <input type="hidden" name="id" th:value="${alumne.id}" />
                 <input type="text" name="nom" th:value="${alumne.nom}" required/>
                 <input type="text" name="cognom" th:value="${alumne.cognom}" required/>
@@ -41,6 +41,6 @@
     </tbody>
 </table>
 <br>
-<a href="/afegirAlumne.html">Afegir nou usuari</a>
+<a href="/afegirUsuari.html">Afegir nou usuari</a>
 </body>
 </html>

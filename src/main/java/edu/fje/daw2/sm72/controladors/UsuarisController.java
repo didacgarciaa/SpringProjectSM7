@@ -30,6 +30,11 @@ public class UsuarisController {
         return "usuaris/afegirUsuariForm";
     }
 
+    @GetMapping("/afegirUsuari")
+    public String mostrarFormulariAfegirUsuariGet() {
+        return "redirect:/afegirUsuariForm";
+    }
+
     @PostMapping("/afegirUsuari")
     public String afegirUsuari(
             @RequestParam String nom,
@@ -38,27 +43,41 @@ public class UsuarisController {
             Model model) {
         Usuari usuari = new Usuari(nom, cognom, email);
         repositori.save(usuari);
-        model.addAttribute("alumneAfegit", usuari); // Changed to match template expectation
+        model.addAttribute("alumneAfegit", usuari);
         model.addAttribute("llistaUsuaris", repositori.findAll());
-        return "usuaris/afegirUsuari";
+        return "redirect:/consultarUsuaris";
     }
 
     @GetMapping("/consultarUsuaris")
     public String consultarUsuaris(Model model) {
-        model.addAttribute("llistaAlumnes", repositori.findAll()); // Changed to match template expectation
+        model.addAttribute("llistaUsuaris", repositori.findAll());
         return "usuaris/consultarUsuaris";
     }
 
+    @GetMapping("/esborrarUsuari")
+    public String mostrarFormulariEsborrarUsuari() {
+        return "redirect:/esborrarUsuari.html";
+    }
+
     @PostMapping("/esborrarUsuari")
-    public String esborrarUsuari(@RequestParam String id, Model model) {
-        repositori.deleteById(id);
-        model.addAttribute("llistaAlumnes", repositori.findAll()); // Changed to match template
+    public String esborrarUsuari(@RequestParam Long id, Model model) {
+        try {
+            repositori.deleteById(id);
+        } catch (Exception e) {
+            model.addAttribute("error", "No s'ha pogut esborrar l'usuari amb ID: " + id);
+        }
+        model.addAttribute("llistaUsuaris", repositori.findAll());
         return "usuaris/consultarUsuaris";
+    }
+
+    @GetMapping("/modificarUsuari")
+    public String mostrarFormulariModificarUsuari() {
+        return "redirect:/modificarUsuari.html";
     }
 
     @PostMapping("/modificarUsuari")
     public String modificarUsuari(
-            @RequestParam String id,
+            @RequestParam Long id,
             @RequestParam String nom,
             @RequestParam String cognom,
             @RequestParam String email,
@@ -70,8 +89,10 @@ public class UsuarisController {
             usuari.setCognom(cognom);
             usuari.setEmail(email);
             repositori.save(usuari);
+        } else {
+            model.addAttribute("error", "No s'ha trobat l'usuari amb ID: " + id);
         }
-        model.addAttribute("llistaAlumnes", repositori.findAll()); // Changed to match template
+        model.addAttribute("llistaUsuaris", repositori.findAll());
         return "usuaris/consultarUsuaris";
     }
 }

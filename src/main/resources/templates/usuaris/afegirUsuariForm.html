@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Alumnes CLOT - Afegit</title>
+</head>
+<body>
+<h1>Alumne Afegit</h1>
+<div th:if="${alumneAfegit != null}">
+    <p>Afegit: <span th:text="${alumneAfegit.nom}"></span> <span th:text="${alumneAfegit.cognom}"></span></p>
+    <p>Email: <span th:text="${alumneAfegit.email}"></span></p>
+</div>
+
+<h2>Afegir nou usuari</h2>
+<form action="/afegirUsuari" method="post">
+    <div>
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required/>
+    </div>
+    <div>
+        <label for="cognom">Cognom:</label>
+        <input type="text" id="cognom" name="cognom" required/>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required/>
+    </div>
+    <div>
+        <button type="submit">Afegir usuari</button>
+    </div>
+</form>
+
+<br>
+<a href="/consultarUsuaris">Veure llista d'usuaris</a>
+</body>
+</html>
