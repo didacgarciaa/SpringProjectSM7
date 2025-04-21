@@ -5,7 +5,11 @@ import org.thymeleaf.engine.AttributeName;
 import org.thymeleaf.model.IProcessableElementTag;
 import org.thymeleaf.processor.element.AbstractAttributeTagProcessor;
 import org.thymeleaf.processor.element.IElementTagStructureHandler;
+import org.thymeleaf.standard.expression.IStandardExpression;
+import org.thymeleaf.standard.expression.IStandardExpressionParser;
+import org.thymeleaf.standard.expression.StandardExpressions;
 import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.util.StringUtils;
 
 /**
  * Procesador de atributos personalizado para ThymeLeaf.
@@ -54,10 +58,38 @@ public class RatingStarsAttrProcessor extends AbstractAttributeTagProcessor {
             final String attributeValue,
             final IElementTagStructureHandler structureHandler) {
         
+        if (StringUtils.isEmpty(attributeValue)) {
+            structureHandler.setBody("Puntuación no disponible", false);
+            return;
+        }
+        
         try {
-            double rating = Double.parseDouble(attributeValue);
-            int fullStars = (int) Math.floor(rating);
-            boolean halfStar = (rating - fullStars) >= 0.5;
+            // Parse and evaluate the expression if it's a Thymeleaf expression
+            double rating;
+            
+            if (attributeValue.contains("${")) {
+                // It's a Thymeleaf expression, need to evaluate it
+                final IStandardExpressionParser parser = StandardExpressions.getExpressionParser(context.getConfiguration());
+                final IStandardExpression expression = parser.parseExpression(context, attributeValue);
+                final Object result = expression.execute(context);
+                
+                if (result instanceof Number) {
+                    rating = ((Number) result).doubleValue();
+                } else if (result instanceof String) {
+                    rating = Double.parseDouble((String) result);
+                } else {
+                    rating = 0.0;
+                }
+            } else {
+                // It's a direct value
+                rating = Double.parseDouble(attributeValue);
+            }
+            
+            // Limitar a 0-10
+            rating = Math.max(0, Math.min(10, rating));
+            
+            int fullStars = (int) Math.floor(rating / 2); // Ajustar a escala de 5 estrellas
+            boolean halfStar = ((rating / 2) - fullStars) >= 0.5;
             int emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
             
             StringBuilder starsHtml = new StringBuilder();
@@ -83,8 +115,8 @@ public class RatingStarsAttrProcessor extends AbstractAttributeTagProcessor {
             // Establecer el HTML generado
             structureHandler.setBody(starsHtml.toString(), false);
             
-        } catch (NumberFormatException e) {
-            structureHandler.setBody("Puntuación inválida", false);
+        } catch (Exception e) {
+            structureHandler.setBody("Puntuación inválida: " + e.getMessage(), false);
         }
     }
 } 

@@ -127,7 +127,7 @@ public class PeliculesController {
      */
     @PostMapping("/esborrarPelicula")
     public String esborrarPelicula(
-            @RequestParam(required = true) Long id, 
+            @RequestParam(required = true) String id, 
             Model model) {
         try {
             repositori.deleteById(id);
@@ -166,7 +166,7 @@ public class PeliculesController {
      */
     @PostMapping("/modificarPelicula")
     public String modificarPelicula(
-            @RequestParam(required = true) Long id,
+            @RequestParam(required = true) String id,
             @RequestParam(required = true) int numId,
             @RequestParam(required = true) String titulo,
             @RequestParam(required = true) double puntuacion,

@@ -1,27 +1,22 @@
 package edu.fje.daw2.sm72.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Column;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Objects;
 
 /**
  * Representa una película en el sistema.
  * Clase que encapsula la información relacionada con una película.
- * Se almacena en la base de datos como una entidad.
+ * Se almacena en MongoDB como un documento.
  * 
  * @author Spring Project SM7
  * @version 1.0
  */
-@Entity
+@Document(collection = "peliculas")
 public class Pelicula {
     /** Identificador único autogenerado */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     
     /** Número de identificación */
     private int numId;
@@ -33,8 +28,6 @@ public class Pelicula {
     private double puntuacion;
     
     /** Datos de la imagen en formato binario */
-    @Lob
-    @Column(name = "image_data", length = 1000000)
     private byte[] imageData;
     
     /** Nombre del archivo de la imagen original */
@@ -90,7 +83,7 @@ public class Pelicula {
      * 
      * @return El identificador único
      */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -99,7 +92,7 @@ public class Pelicula {
      * 
      * @param id El identificador único
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

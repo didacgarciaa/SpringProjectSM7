@@ -37,7 +37,7 @@ public class ImageController {
      * @return ResponseEntity con los datos de la imagen o NOT_FOUND si no existe
      */
     @GetMapping("/image/pelicula/{id}")
-    public ResponseEntity<byte[]> getPeliculaImage(@PathVariable("id") Long id) {
+    public ResponseEntity<byte[]> getPeliculaImage(@PathVariable("id") String id) {
         Optional<Pelicula> optionalPelicula = peliculaRepositori.findById(id);
         
         if (optionalPelicula.isPresent() && optionalPelicula.get().hasImage()) {

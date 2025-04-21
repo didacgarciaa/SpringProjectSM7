@@ -3,6 +3,7 @@ package edu.fje.daw2.sm72.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
 import org.thymeleaf.dialect.AbstractProcessorDialect;
 import org.thymeleaf.processor.IProcessor;
 import org.thymeleaf.standard.StandardDialect;
@@ -14,6 +15,7 @@ import org.thymeleaf.standard.StandardDialect;
  * @author Spring Project SM7
  * @version 1.0
  */
+@Component
 public class CustomDialect extends AbstractProcessorDialect {
 
     private static final String DIALECT_NAME = "Spring Project Dialect";
