@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Añadir Película')">
+    <meta charset="UTF-8">
+    <title>Añadir Película</title>
+</head>
+<body>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+    
+    <div class="container mt-4">
+        <div th:replace="fragments/layout :: alerts"></div>
+        
+        <h1 class="text-center mb-4">Añadir Nueva Película</h1>
+        
+        <div class="form-container">
+            <form action="/afegirPelicula" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="puntuacion">Puntuación</label>
+                    <input type="number" id="puntuacion" name="puntuacion" step="0.1" min="0" max="10" class="form-control" required>
+                    <span class="form-hint">Valor entre 0 y 10</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">Imagen de la película</label>
+                    <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                    <span class="form-hint">Seleccione una imagen para la película (opcional)</span>
+                </div>
+                
+                <div class="form-buttons">
+                    <a href="/consultarPelicules" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html> 

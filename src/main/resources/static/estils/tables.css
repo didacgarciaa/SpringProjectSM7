@@ -1,0 +1,93 @@
+/* Table styling for data display */
+
+.table-container {
+  margin-bottom: 30px;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: var(--box-shadow);
+  background-color: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.data-table th {
+  background-color: var(--primary);
+  color: white;
+  text-align: left;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.data-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f5f8fa;
+}
+
+.data-table .actions {
+  display: flex;
+  gap: 10px;
+}
+
+.data-table .btn-sm {
+  padding: 6px 10px;
+  font-size: 0.875rem;
+}
+
+.data-table .empty-state {
+  text-align: center;
+  padding: 30px;
+  color: #7f8c8d;
+}
+
+.data-table .status-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.data-table .status-active {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.data-table .status-inactive {
+  background-color: #fbe9e7;
+  color: #d32f2f;
+}
+
+.data-table .status-pending {
+  background-color: #fff8e1;
+  color: #ffa000;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+  .data-table th,
+  .data-table td {
+    padding: 10px;
+  }
+  
+  .data-table .actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .data-table .btn-sm {
+    width: 100%;
+    text-align: center;
+  }
+} 

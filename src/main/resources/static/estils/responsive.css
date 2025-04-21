@@ -1,0 +1,169 @@
+/* Responsive styles for different device sizes */
+
+/* Tablets (portrait) */
+@media (max-width: 991px) {
+  .container {
+    max-width: 96%;
+    padding: 0 15px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .card-header h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 767px) {
+  h1 {
+    font-size: 1.75rem;
+    text-align: center;
+  }
+  
+  .d-flex.justify-content-between {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .d-flex.justify-content-between .btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .data-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .data-table th,
+  .data-table td {
+    padding: 8px;
+  }
+  
+  .form-container {
+    padding: 15px;
+  }
+  
+  .modal-dialog {
+    margin: 10px;
+  }
+  
+  .actions .btn {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+  
+  /* Stack action buttons vertically */
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+  }
+  
+  .footer {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+}
+
+/* Small devices */
+@media (max-width: 575px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  .card-header h3 {
+    font-size: 1.25rem;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .list-group-item {
+    padding: 10px;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  .modal-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* For larger phones in landscape orientation */
+@media (max-width: 767px) and (orientation: landscape) {
+  .container {
+    max-width: 95%;
+  }
+  
+  .actions {
+    flex-direction: row;
+    gap: 5px;
+  }
+  
+  .modal-dialog {
+    max-width: 90%;
+    margin: 20px auto;
+  }
+}
+
+/* For print media */
+@media print {
+  .navbar,
+  .footer,
+  .actions,
+  .btn,
+  form,
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    color: #000;
+    background: #fff;
+  }
+  
+  .container {
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .data-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .data-table th,
+  .data-table td {
+    border: 1px solid #000;
+  }
+  
+  h1 {
+    font-size: 14pt;
+    margin-bottom: 20px;
+  }
+  
+  a:link, a:visited {
+    color: #000;
+    text-decoration: none;
+  }
+} 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Inici')">
+    <meta charset="UTF-8">
+    <title>Inici - SpringProjectSM7</title>
+</head>
+<body>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+    
+    <div class="container mt-4">
+        <div th:replace="fragments/layout :: alerts"></div>
+        
+        <h1 class="text-center mb-4">Benvinguts al Gestor de Pel·lícules i Usuaris</h1>
+        
+        <div class="row mt-5">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h3><i class="fas fa-users me-2"></i>Gestió d'Usuaris</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-3">Gestiona els usuaris de l'aplicació amb aquestes opcions:</p>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/afegirUsuariForm" class="text-decoration-none">
+                                    <i class="fas fa-user-plus me-2 text-success"></i>Afegir Usuari
+                                </a>
+                                <span class="badge bg-success rounded-pill">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/consultarUsuaris" class="text-decoration-none">
+                                    <i class="fas fa-search me-2 text-primary"></i>Consultar Usuaris
+                                </a>
+                                <span class="badge bg-primary rounded-pill">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/esborrarUsuari" class="text-decoration-none">
+                                    <i class="fas fa-user-minus me-2 text-danger"></i>Esborrar Usuari
+                                </a>
+                                <span class="badge bg-danger rounded-pill">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/modificarUsuari" class="text-decoration-none">
+                                    <i class="fas fa-user-edit me-2 text-warning"></i>Modificar Usuari
+                                </a>
+                                <span class="badge bg-warning rounded-pill">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </li>
+                        </ul>
+                        <a href="/consultarUsuaris" class="btn btn-primary w-100">
+                            <i class="fas fa-users me-2"></i>Gestionar tots els usuaris
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h3><i class="fas fa-film me-2"></i>Gestió de Pel·lícules</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-3">Administra el catàleg de pel·lícules amb aquestes opcions:</p>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/afegirPeliculaForm" class="text-decoration-none">
+                                    <i class="fas fa-plus-circle me-2 text-success"></i>Afegir Pel·lícula
+                                </a>
+                                <span class="badge bg-success rounded-pill">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/consultarPelicules" class="text-decoration-none">
+                                    <i class="fas fa-list me-2 text-primary"></i>Consultar Pel·lícules
+                                </a>
+                                <span class="badge bg-primary rounded-pill">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/modificarPelicula" class="text-decoration-none">
+                                    <i class="fas fa-edit me-2 text-warning"></i>Modificar Pel·lícula
+                                </a>
+                                <span class="badge bg-warning rounded-pill">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/esborrarPelicula" class="text-decoration-none">
+                                    <i class="fas fa-trash-alt me-2 text-danger"></i>Esborrar Pel·lícula
+                                </a>
+                                <span class="badge bg-danger rounded-pill">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </li>
+                        </ul>
+                        <a href="/consultarPelicules" class="btn btn-success w-100">
+                            <i class="fas fa-film me-2"></i>Gestionar totes les pel·lícules
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html> 

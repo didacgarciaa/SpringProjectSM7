@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Modificar Película')">
+    <meta charset="UTF-8">
+    <title>Modificar Película</title>
+</head>
+<body>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+    
+    <div class="container mt-4">
+        <div th:replace="fragments/layout :: alerts"></div>
+        
+        <h1 class="text-center mb-4">Modificar Película</h1>
+        
+        <div class="form-container">
+            <form action="/modificarPelicula" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="id">ID de la Película</label>
+                    <input type="number" id="id" name="id" class="form-control" required>
+                    <span class="form-hint">Ingrese el ID exacto de la película a modificar</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="numId">Número ID</label>
+                    <input type="number" id="numId" name="numId" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="puntuacion">Puntuación</label>
+                    <input type="number" id="puntuacion" name="puntuacion" step="0.1" min="0" max="10" class="form-control" required>
+                    <span class="form-hint">Valor entre 0 y 10</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">Imagen de la película</label>
+                    <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                    <span class="form-hint">Seleccione una nueva imagen para la película (opcional)</span>
+                </div>
+                
+                <div class="form-check mb-3">
+                    <input type="checkbox" id="keepExistingImage" name="keepExistingImage" value="true" class="form-check-input">
+                    <label for="keepExistingImage" class="form-check-label">Mantener la imagen existente si no se selecciona una nueva</label>
+                </div>
+                
+                <div class="form-buttons">
+                    <a href="/consultarPelicules" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html> 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Modificar Usuari')">
+    <meta charset="UTF-8">
+    <title>Modificar Usuari</title>
+</head>
+<body>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+    
+    <div class="container mt-4">
+        <div th:replace="fragments/layout :: alerts"></div>
+        
+        <h1 class="text-center mb-4">Modificar Usuari</h1>
+        
+        <div class="form-container">
+            <form action="/modificarUsuari" method="post">
+                <div class="form-group">
+                    <label for="id">ID de l'Usuari</label>
+                    <input type="number" id="id" name="id" class="form-control" required>
+                    <span class="form-hint">Introdueix l'ID exacte de l'usuari a modificar</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="nom" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cognom">Cognom</label>
+                    <input type="text" id="cognom" name="cognom" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                
+                <div class="form-buttons">
+                    <a href="/consultarUsuaris" class="btn btn-secondary">Cancel·lar</a>
+                    <button type="submit" class="btn btn-primary">Guardar Canvis</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html> 
