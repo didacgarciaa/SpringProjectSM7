@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Large files ###
+*.tar
+springprojectsm7.tar
