@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sm="http://www.thymeleaf.org/sm">
+<head th:replace="fragments/layout :: head('Mis Películas')">
+    <meta charset="UTF-8">
+    <title>Mis Películas</title>
+</head>
+<body>
+    <nav th:replace="fragments/layout :: navbar"></nav>
+    
+    <div class="container mt-4">
+        <div th:replace="fragments/layout :: alerts"></div>
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Mis Películas Guardadas</h1>
+            <a th:href="@{/consultarPelicules}" class="btn btn-primary">
+                <i class="fas fa-film me-2"></i> Ver todas las películas
+            </a>
+        </div>
+        
+        <div class="alert alert-info" th:if="${peliculaIds == null || peliculaIds.isEmpty()}">
+            <i class="fas fa-info-circle me-2"></i> 
+            No tienes películas guardadas. Puedes guardar películas desde la sección de 
+            <a th:href="@{/consultarPelicules}" class="alert-link">Películas</a>.
+        </div>
+        
+        <div class="row" th:if="${!peliculaIds.isEmpty()}">
+            <div class="col-md-12">
+                <h3 th:text="${'Películas de ' + usuario.nom + ' ' + usuario.cognom}">Películas del usuario</h3>
+                <ul class="list-group">
+                    <li class="list-group-item" th:each="peliculaId : ${peliculaIds}">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span th:text="${peliculaId}">ID de película</span>
+                            <form action="/eliminarPeliculaUsuari" method="post">
+                                <input type="hidden" name="peliculaId" th:value="${peliculaId}" />
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash me-1"></i> Eliminar de mi lista
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html> 

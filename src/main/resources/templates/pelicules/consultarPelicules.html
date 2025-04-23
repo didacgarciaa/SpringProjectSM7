@@ -59,6 +59,22 @@
                                 <i class="fas fa-trash me-1"></i> Borrar
                             </button>
                             
+                            <!-- Botón para guardar en mi lista si la sesión está activa -->
+                            <form th:if="${session.userId != null}" action="/guardarPeliculaUsuari" method="post" style="display:inline;">
+                                <input type="hidden" name="peliculaId" th:value="${pelicula.id}" />
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    <i class="fas fa-bookmark me-1"></i> Guardar en mi lista
+                                </button>
+                            </form>
+                            
+                            <!-- Botón para eliminar de mi lista si la sesión está activa -->
+                            <form th:if="${session.userId != null}" action="/eliminarPeliculaUsuari" method="post" style="display:inline;">
+                                <input type="hidden" name="peliculaId" th:value="${pelicula.id}" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-bookmark-slash me-1"></i> Quitar de mi lista
+                                </button>
+                            </form>
+                            
                             <!-- Edit Modal -->
                             <div class="modal fade" th:id="'editModal' + ${pelicula.id}" tabindex="-1">
                                 <div class="modal-dialog">
@@ -154,35 +170,26 @@
     
     <footer th:replace="fragments/layout :: footer"></footer>
     
-    <!-- Script for rating stars preview -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Find all rating inputs
             const ratingInputs = document.querySelectorAll('input[name="puntuacion"]');
             
-            // Add event listeners to each input
             ratingInputs.forEach(input => {
                 input.addEventListener('input', function() {
-                    // Get the current value
                     const rating = parseFloat(this.value);
                     
-                    // Find the preview container (it's in the same form group)
                     const previewContainer = this.closest('.form-group').querySelector('[sm\\:rating-stars]');
                     
                     if (previewContainer) {
-                        // Update the attribute value
                         previewContainer.setAttribute('sm:rating-stars', rating);
                         
-                        // Create the stars HTML
                         const starsHtml = createStarsHtml(rating);
                         
-                        // Update the preview
                         previewContainer.innerHTML = starsHtml;
                     }
                 });
             });
             
-            // Function to create stars HTML
             function createStarsHtml(rating) {
                 const fullStars = Math.floor(rating);
                 const halfStar = (rating - fullStars) >= 0.5;
@@ -190,22 +197,18 @@
                 
                 let html = '';
                 
-                // Add full stars
                 for (let i = 0; i < fullStars; i++) {
                     html += '<i class="fas fa-star text-warning"></i>';
                 }
                 
-                // Add half star if needed
                 if (halfStar) {
                     html += '<i class="fas fa-star-half-alt text-warning"></i>';
                 }
                 
-                // Add empty stars
                 for (let i = 0; i < emptyStars; i++) {
                     html += '<i class="far fa-star text-warning"></i>';
                 }
                 
-                // Add the numeric value
                 html += '<span class="ms-2">' + rating + '</span>';
                 
                 return html;

@@ -1,7 +1,10 @@
 package edu.fje.daw2.sm72.controladors;
 
 import edu.fje.daw2.sm72.model.Pelicula;
+import edu.fje.daw2.sm72.model.Usuari;
 import edu.fje.daw2.sm72.repositoris.PeliculaRepositori;
+import edu.fje.daw2.sm72.repositoris.UsuariRepositori;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,12 @@ public class PeliculesController {
      */
     @Autowired
     private PeliculaRepositori repositori;
+
+    /**
+     * Repositorio de usuarios para acceso a datos
+     */
+    @Autowired
+    private UsuariRepositori usuariRepositori;
 
     /**
      * Contador para asignar IDs a nuevas películas
@@ -202,5 +211,94 @@ public class PeliculesController {
         model.addAttribute("llistaPelicules", repositori.findAll());
         model.addAttribute("activeTab", "pelicules");
         return "pelicules/consultarPelicules";
+    }
+
+    /**
+     * Guarda una película en la lista de favoritos de un usuario
+     * 
+     * @param peliculaId ID de la película a guardar
+     * @param session Sesión actual del usuario
+     * @param model Modelo para pasar datos a la vista
+     * @return Vista con el resultado de la operación
+     */
+    @PostMapping("/guardarPeliculaUsuari")
+    public String guardarPeliculaUsuari(
+            @RequestParam String peliculaId,
+            HttpSession session,
+            Model model) {
+        try {
+            // Obtener el ID del usuario de la sesión
+            Long userId = (Long) session.getAttribute("userId");
+            if (userId == null) {
+                model.addAttribute("error", "Necesitas iniciar sesión para guardar películas");
+                return "redirect:/consultarPelicules";
+            }
+            
+            // Buscar el usuario
+            Optional<Usuari> optUsuari = usuariRepositori.findById(userId);
+            if (!optUsuari.isPresent()) {
+                model.addAttribute("error", "Usuario no encontrado");
+                return "redirect:/consultarPelicules";
+            }
+            
+            // Buscar la película
+            Optional<Pelicula> optPelicula = repositori.findById(peliculaId);
+            if (!optPelicula.isPresent()) {
+                model.addAttribute("error", "Película no encontrada");
+                return "redirect:/consultarPelicules";
+            }
+            
+            // Guardar la película en la lista del usuario
+            Usuari usuari = optUsuari.get();
+            usuari.addPeliculaId(peliculaId);
+            usuariRepositori.save(usuari);
+            
+            model.addAttribute("success", "Película guardada en tu lista");
+            return "redirect:/consultarPelicules";
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al guardar la película: " + e.getMessage());
+            return "redirect:/consultarPelicules";
+        }
+    }
+    
+    /**
+     * Elimina una película de la lista de favoritos de un usuario
+     * 
+     * @param peliculaId ID de la película a eliminar
+     * @param session Sesión actual del usuario
+     * @param model Modelo para pasar datos a la vista
+     * @return Vista con el resultado de la operación
+     */
+    @PostMapping("/eliminarPeliculaUsuari")
+    public String eliminarPeliculaUsuari(
+            @RequestParam String peliculaId,
+            HttpSession session,
+            Model model) {
+        try {
+            // Obtener el ID del usuario de la sesión
+            Long userId = (Long) session.getAttribute("userId");
+            if (userId == null) {
+                model.addAttribute("error", "Necesitas iniciar sesión para eliminar películas");
+                return "redirect:/consultarPelicules";
+            }
+            
+            // Buscar el usuario
+            Optional<Usuari> optUsuari = usuariRepositori.findById(userId);
+            if (!optUsuari.isPresent()) {
+                model.addAttribute("error", "Usuario no encontrado");
+                return "redirect:/consultarPelicules";
+            }
+            
+            // Eliminar la película de la lista del usuario
+            Usuari usuari = optUsuari.get();
+            usuari.removePeliculaId(peliculaId);
+            usuariRepositori.save(usuari);
+            
+            model.addAttribute("success", "Película eliminada de tu lista");
+            return "redirect:/consultarPelicules";
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al eliminar la película: " + e.getMessage());
+            return "redirect:/consultarPelicules";
+        }
     }
 }

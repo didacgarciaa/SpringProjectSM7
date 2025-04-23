@@ -5,10 +5,8 @@
     <title>Consultar Usuaris</title>
 </head>
 <body>
-    <!-- Navigation -->
     <nav th:replace="fragments/layout :: navbar"></nav>
 
-    <!-- Alerts -->
     <div th:replace="fragments/layout :: alerts"></div>
 
     <div class="container mt-4">
@@ -61,7 +59,6 @@
         </div>
     </div>
     
-    <!-- Edit User Modal -->
     <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -94,7 +91,6 @@
         </div>
     </div>
 
-    <!-- Delete User Modal -->
     <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -117,13 +113,10 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer th:replace="fragments/layout :: footer"></footer>
     
-    <!-- Script to handle modal data -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Edit user modal
             const editButtons = document.querySelectorAll('.edit-user-btn');
             editButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -134,7 +127,6 @@
                 });
             });
             
-            // Delete user modal
             const deleteButtons = document.querySelectorAll('[data-bs-target="#deleteUserModal"]');
             deleteButtons.forEach(button => {
                 button.addEventListener('click', function() {
